@@ -52,14 +52,14 @@ subprojects {
 }
 
 project(":module-common") {
-    /* */
+    /* DTO, Util 클래스 등등 */
     dependencies {
 
     }
 }
 
 project(":module-core") {
-    /* 도메인 및 비즈니스 로직을 포함하고 있지 않은 모듈로 security, logging */
+    /* 도메인 및 비즈니스 로직을 포함하고 있지 않은 모듈로 security, logging, filter */
     dependencies {
         implementation project(":module-common")
 
