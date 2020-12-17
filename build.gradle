@@ -2,6 +2,7 @@
 buildscript {
     ext {
         springBootVersion = '2.3.4.RELEASE'
+        springfoxVersion =  '2.9.2'
     }
     repositories {
         mavenCentral()
@@ -11,6 +12,7 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
     }
 }
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
@@ -31,9 +33,6 @@ subprojects {
     }
 
     dependencies {
-
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
@@ -71,6 +70,15 @@ project(":module-domain") {
     /* 서비스 비즈니스 로직과 관계가 없음, 하나의 인프라 스트럭쳐에 대한 책임만 갖는다. (DB Server, Redis, ElasticSearch 등등) */
     dependencies {
         implementation project(":module-common")
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    }
+}
+
+project(":module-redis") {
+    /* 서비스 비즈니스 로직과 관계가 없음, 하나의 인프라 스트럭쳐에 대한 책임만 갖는다. (DB Server, Redis, ElasticSearch 등등) */
+    dependencies {
+        implementation project(":module-common")
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     }
 }
 
@@ -78,6 +86,10 @@ project(":module-api") {
     /* API용 비즈니스 로직관련 모듈 swagger */
     dependencies {
         implementation project(":module-common")
+
+        implementation("io.springfox:springfox-swagger2:${springfoxVersion}")
+        implementation("io.springfox:springfox-swagger-ui:${springfoxVersion}")
+
         implementation 'org.springframework.boot:spring-boot-starter-web'
     }
 }
@@ -86,6 +98,10 @@ project(":module-batch") {
     /* Batch Service 관련 */
     dependencies {
         implementation project(":module-common")
+
+        implementation("org.apache.poi:poi:4.1.2")          // .xlsx
+        implementation("org.apache.poi:poi-ooxml:4.1.2")    // .xls
+
         implementation 'org.springframework.boot:spring-boot-starter-batch'
         testImplementation 'org.springframework.batch:spring-batch-test'
     }
