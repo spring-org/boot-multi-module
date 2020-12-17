@@ -1,0 +1,92 @@
+/* 전체 프로젝트 의존성 관리 */
+buildscript {
+    ext {
+        springBootVersion = '2.3.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+    }
+}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    group 'kr.seok'
+    version '1.0-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        runtimeOnly 'com.h2database:h2'
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+
+    clean {
+        delete 'out'
+    }
+}
+
+project(":module-common") {
+    /* */
+    dependencies {
+
+    }
+}
+
+project(":module-core") {
+    /* 도메인 및 비즈니스 로직을 포함하고 있지 않은 모듈로 security, logging */
+    dependencies {
+        implementation project(":module-common")
+
+    }
+}
+
+project(":module-domain") {
+    /* 서비스 비즈니스 로직과 관계가 없음, 하나의 인프라 스트럭쳐에 대한 책임만 갖는다. (DB Server, Redis, ElasticSearch 등등) */
+    dependencies {
+        implementation project(":module-common")
+    }
+}
+
+project(":module-api") {
+    /* API용 비즈니스 로직관련 모듈 swagger */
+    dependencies {
+        implementation project(":module-common")
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+    }
+}
+
+project(":module-batch") {
+    /* Batch Service 관련 */
+    dependencies {
+        implementation project(":module-common")
+        implementation 'org.springframework.boot:spring-boot-starter-batch'
+        testImplementation 'org.springframework.batch:spring-batch-test'
+    }
+}

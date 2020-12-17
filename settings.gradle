@@ -1,0 +1,8 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+rootProject.name = 'boot-multi-module'
+include 'module-common', 'module-api', 'module-batch', 'module-core', 'module-domain'
+
