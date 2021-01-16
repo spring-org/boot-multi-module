@@ -1,6 +1,7 @@
 # Project exclude paths
 /.gradle/
 /.idea/
+**/generated/
 /module-api/build/
 /module-api/build/classes/java/main/
 /module-batch/build/

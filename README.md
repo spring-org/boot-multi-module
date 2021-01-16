@@ -25,10 +25,16 @@
   
 - Application
   - 배치, api 모듈
-  
-- 문제1
-  - 데이터베이 커넥션
-  
-## 참고
 
+- 문제1
+  - 데이터베이스 커넥션
+  
+- Gradle 6 버전
+  - Querydsl 멀티 모듈 설정방법 추가
+
+## 참고
+- [멀티모듈 설계 이야](https://woowabros.github.io/study/2019/07/01/multi-module.html#3-접근-개방폐쇄)
 - [(Gradle dependency) api와 implementation 차이](https://jongmin92.github.io/2019/05/09/Gradle/gradle-api-vs-implementation/)
+- [Gradle4 Multi Module - Querydsl 적용](https://github.com/HomoEfficio/dev-tips/blob/master/QueryDSL-Gradle4-MultiModule-SpringBoot2.md)
+- [Gradle6 Multi Module - Querydsl 적용](https://jojoldu.tistory.com/538)
+- [2020년 Gradle Multi Module Settings](http://honeymon.io/tech/2020/07/09/gradle-annotation-processor-with-querydsl.html)

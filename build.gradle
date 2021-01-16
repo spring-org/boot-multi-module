@@ -45,9 +45,40 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+}
 
-    clean {
-        delete 'out'
+
+/* Querydsl 라이브러리를 사용하는 모듈 리스트 */
+def querydslProjects = [
+        project(":module-domain"),
+        project(":module-api"),
+        project(":module-batch")
+]
+
+configure(querydslProjects) {
+    apply plugin: "io.spring.dependency-management"
+
+    dependencies {
+        compile "com.querydsl:querydsl-jpa"
+        compile "com.querydsl:querydsl-core"
+        annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa" // querydsl JPAAnnotationProcessor 사용 지정
+        annotationProcessor "jakarta.persistence:jakarta.persistence-api:2.2.3"
+        annotationProcessor "jakarta.annotation:jakarta.annotation-api:1.3.5"
+    }
+
+    // querydsl 적용
+    def generated='src/main/generated'
+
+    sourceSets {
+        main.java.srcDirs += [ generated ]
+    }
+
+    tasks.withType(JavaCompile) {
+        options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+    }
+
+    clean.doLast {
+        file(generated).deleteDir()
     }
 }
 
