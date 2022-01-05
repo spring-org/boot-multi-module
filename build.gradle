@@ -14,21 +14,23 @@ buildscript {
 }
 
 allprojects {
-    group 'kr.seok'
-    version '1.0-SNAPSHOT'
 
-}
-
-subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.springframework.boot'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    group 'kr.seok'
+    version '1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
     }
+
+}
+
+subprojects {
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
 
     configurations {
         compileOnly {
